@@ -194,58 +194,56 @@
     /* TEXT SLOT: Liquid Glass UI */
     .text-slot {
       position: absolute;
-      top: 50%;
-      width: min(460px, 38vw);
+      bottom: 6vh;
+      left: 50%;
+      width: 90vw;
+      max-width: 1100px;
       opacity: 0;
-      transform: translateY(20px);
+      transform: translate(-50%, 30px);
       transition: opacity 0.8s ease, transform 0.8s ease;
       pointer-events: auto;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      text-align: center;
       gap: 1.2rem;
+      z-index: 10;
     }
     .text-slot.visible {
       opacity: 1;
-      transform: translateY(-50%);
+      transform: translate(-50%, 0);
     }
     .text-slot:not(.visible) {
-      transform: translateY(calc(-50% + 20px));
-    }
-
-    .slot-right { right: 5vw; }
-    .slot-left  { left: 5vw; }
-    .slot-center {
-      left: 50%;
-      transform: translate(-50%, 20px);
-      align-items: center;
-      text-align: center;
-    }
-    .text-slot.slot-center.visible {
-      transform: translate(-50%, -50%);
-    }
-    .text-slot.slot-center:not(.visible) {
-      transform: translate(-50%, calc(-50% + 20px));
+      transform: translate(-50%, 30px);
     }
 
     /* Title OUTSIDE glass box */
     .title {
-      font-size: clamp(2rem, 3.2vw, 2.8rem);
+      font-size: clamp(2.2rem, 3.5vw, 3rem);
       font-weight: 700;
       line-height: 1.2;
       color: #fff;
-      text-shadow: 0 4px 16px rgba(0,0,0,0.6);
+      text-shadow: 0 4px 16px rgba(0,0,0,0.8);
       margin: 0;
     }
 
     /* Glass Box */
     .glass-box {
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(12px) saturate(110%);
-      -webkit-backdrop-filter: blur(12px) saturate(110%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 28px;
-      padding: 2.2rem;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      background: rgba(10, 10, 10, 0.35);
+      backdrop-filter: blur(16px) saturate(120%);
+      -webkit-backdrop-filter: blur(16px) saturate(120%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1.8rem 3rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      width: 100%;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, background 0.4s ease, border 0.4s ease;
+    }
+    .glass-box:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+      background: rgba(30, 30, 30, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.25);
     }
 
     .tags-label {
@@ -257,9 +255,9 @@
       text-transform: uppercase;
     }
     .tags {
-      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
       list-style: none;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
     .tags li {
       background: rgba(255,255,255,0.08);
@@ -273,9 +271,9 @@
     }
 
     .desc {
-      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      font-size: clamp(0.95rem, 1.3vw, 1.1rem);
       font-weight: 400;
-      line-height: 1.9;
+      line-height: 1.8;
       color: rgba(255,255,255,0.9);
       text-shadow: 0 1px 4px rgba(0,0,0,0.4);
       margin: 0;
@@ -288,21 +286,48 @@
       transform: translateY(-50%);
       z-index: 150;
       display: flex; flex-direction: column;
-      gap: 0.8rem;
+      gap: 1rem;
       opacity: 0;
       transition: opacity 0.8s ease 5.5s;
     }
-    #progress.show { opacity: 0.7; }
+    #progress.show { opacity: 1; }
 
     #progress .dot {
-      width: 5px; height: 24px;
-      background: rgba(255,255,255,0.22);
+      width: 6px; height: 26px;
+      background: rgba(255,255,255,0.25);
       border-radius: 4px;
-      transition: all 0.45s ease;
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
+      position: relative;
+    }
+    #progress .dot:hover {
+      background: rgba(255,255,255,0.8);
+      transform: scaleX(1.5);
     }
     #progress .dot.active {
-      background: linear-gradient(to bottom, #A855F7, #06B6D4);
-      height: 40px;
+      background: var(--dot-color, linear-gradient(to bottom, #A855F7, #06B6D4));
+      height: 45px;
+      box-shadow: 0 0 15px var(--dot-color, rgba(255,255,255,0.5));
+    }
+    #progress .dot::after {
+      content: attr(data-title);
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(4px);
+    }
+    #progress .dot:hover::after {
+      opacity: 1;
     }
 
     /* ─── SCROLL HINT ───────────────────────────────────── */
@@ -358,8 +383,12 @@
 
   <!-- ══ PROGRESS DOTS ══════════════════════════════════ -->
   <div id="progress">
-    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot" style="--dot-color: #06B6D4;" data-title="واجهة المركز" data-idx="0"></div>
+    <div class="dot" style="--dot-color: #10B981;" data-title="الشمولية الرقمية" data-idx="1"></div>
+    <div class="dot" style="--dot-color: #F59E0B;" data-title="قصص النجاح" data-idx="2"></div>
+    <div class="dot" style="--dot-color: #8B5CF6;" data-title="التقنيات الناشئة" data-idx="3"></div>
+    <div class="dot" style="--dot-color: #EC4899;" data-title="التجارب التعليمية" data-idx="4"></div>
+    <div class="dot" style="--dot-color: #3B82F6;" data-title="التجارب الغامرة" data-idx="5"></div>
   </div>
 
   <!-- ══ TIMELINE ═══════════════════════════════════════ -->
@@ -404,7 +433,7 @@
       <div class="text-layer">
         
         <!-- 01 -->
-        <div class="text-slot slot-right" data-scene="0">
+        <div class="text-slot" data-scene="0">
           <h2 class="title">مركز الابتكار</h2>
           <div class="glass-box">
             <p class="desc">هو مبادرة أطلقتها هيئة الحكومة الرقمية ليكون المحفز الوطني لتبني الابتكار والتقنيات الناشئة في القطاع الحكومي. يهدف المركز إلى تشكيل مستقبل الحكومة الرقمية وتعزيز مسيرتها الاستراتيجية من خلال تصميم تجارب وخدمات حكومية مبتكرة.</p>
@@ -412,11 +441,11 @@
         </div>
         
         <!-- 02 -->
-        <div class="text-slot slot-center" data-scene="1">
+        <div class="text-slot" data-scene="1">
           <h2 class="title">مختبر الشمولية الرقمية</h2>
           <div class="glass-box">
             <div class="tags-label">الممكنات</div>
-            <ul class="tags" style="justify-content: center;">
+            <ul class="tags">
               <li>بيئة متكاملة للاختبار والرصد</li>
               <li>أنظمة التتبع المطورة</li>
               <li>تقنيات تتبع البصر</li>
@@ -427,7 +456,7 @@
         </div>
         
         <!-- 03 -->
-        <div class="text-slot slot-right" data-scene="2">
+        <div class="text-slot" data-scene="2">
           <h2 class="title">منطقة قصص النجاح</h2>
           <div class="glass-box">
             <p class="desc">منصة إلهام صُممت لإبراز النماذج الوطنية المتميزة في مسيرة التحول الرقمي. تهدف المنطقة إلى توثيق واستعراض أفضل الممارسات وحالات الاستخدام النوعية للجهات الحكومية، لتكون مرجعاً وحافزاً لتبني الابتكار.</p>
@@ -435,7 +464,7 @@
         </div>
         
         <!-- 04 -->
-        <div class="text-slot slot-left" data-scene="3">
+        <div class="text-slot" data-scene="3">
           <h2 class="title">مختبر التقنيات الناشئة ونماذج الاعمال</h2>
           <div class="glass-box">
             <div class="tags-label">الممكنات</div>
@@ -450,7 +479,7 @@
         </div>
         
         <!-- 05 -->
-        <div class="text-slot slot-right" data-scene="4">
+        <div class="text-slot" data-scene="4">
           <h2 class="title">مختبر تصميم التجارب التعليمية</h2>
           <div class="glass-box">
             <div class="tags-label">حالات الاستخدام</div>
@@ -465,7 +494,7 @@
         </div>
         
         <!-- 06 -->
-        <div class="text-slot slot-left" data-scene="5">
+        <div class="text-slot" data-scene="5">
           <h2 class="title">مختبر تصميم التجارب الغامرة</h2>
           <div class="glass-box">
             <div class="tags-label">حالات الاستخدام</div>
@@ -503,6 +532,22 @@
     const prog         = document.getElementById('progress');
 
     const SCENE_COUNT = videos.length;
+
+    // Add click listeners to dots to jump to corresponding scene
+    progressDots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        const vh = window.innerHeight;
+        const scrollable = timeline.offsetHeight - vh;
+        // Scroll to the middle of the corresponding scene
+        const targetGlobalProgress = (i + 0.5) / SCENE_COUNT;
+        const targetScrollY = targetGlobalProgress * scrollable;
+        
+        window.scrollTo({
+          top: targetScrollY,
+          behavior: 'smooth'
+        });
+      });
+    });
 
     // Smooth-scrub state
     let targetTime = 0;
