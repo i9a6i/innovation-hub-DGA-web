@@ -1085,7 +1085,12 @@
       } else {
         nav.style.opacity = '';
         prog.style.opacity = '';
-        widget.classList.add('show');
+        // Only show indicators from scene 1 onwards (Digital Inclusion)
+        if (idx >= 1) {
+          widget.classList.add('show');
+        } else {
+          widget.classList.remove('show');
+        }
       }
 
       // Alternating panel side: slots 0,2,4 on right → right panel; 1,3,5 on left → left panel
