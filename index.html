@@ -280,7 +280,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 2.4rem;
+      gap: 1.2rem;
       z-index: 10;
     }
 
@@ -293,64 +293,11 @@
       transform: translate(-50%, 30px);
     }
 
-    /* ─── TITLE WRAP (glass backlight behind label+title) ── */
-    .title-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.55rem;
-      padding: 1rem 2.8rem 1.1rem;
-      background: rgba(5, 3, 20, 0.52);
-      backdrop-filter: blur(18px) saturate(140%);
-      -webkit-backdrop-filter: blur(18px) saturate(140%);
-      border: 1px solid rgba(45, 30, 95, 0.5);
-      border-radius: 22px;
-      box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.45),
-        0 0 0 1px rgba(0, 148, 204, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06),
-        0 0 40px rgba(45, 30, 95, 0.25),
-        0 0 70px rgba(0, 93, 148, 0.12);
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Subtle inner light sweep */
-    .title-wrap::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 22px;
-      background: linear-gradient(
-        145deg,
-        rgba(45, 30, 95, 0.15) 0%,
-        rgba(0, 93, 148, 0.08) 50%,
-        transparent 80%
-      );
-      pointer-events: none;
-    }
-
-    .scene-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      background: linear-gradient(110deg,
-        #9B8AFF 0%,
-        #6A7FCC 40%,
-        #2E7FBF 75%,
-        #0094C8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      filter: drop-shadow(0 0 6px rgba(0, 120, 200, 0.5));
-    }
-
     /* Title OUTSIDE glass box */
     .title {
-      font-size: clamp(1.7rem, 3.8vw, 3.1rem);
+      font-size: clamp(2rem, 4.5vw, 3.8rem);
       font-weight: 700;
-      line-height: 1.15;
+      line-height: 1.1;
       letter-spacing: 0.04em;
       background: linear-gradient(110deg,
         #f5f0ff 0%,
@@ -360,7 +307,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 2px 18px rgba(122, 42, 148, 0.45));
+      filter: drop-shadow(0 2px 22px rgba(122, 42, 148, 0.5));
       margin: 0;
       white-space: nowrap !important;
       display: block !important;
@@ -786,10 +733,7 @@
 
         <!-- 01 -->
         <div class="text-slot" data-scene="0">
-          <div class="title-wrap">
-            <span class="scene-label">مركز الابتكار — هيئة الحكومة الرقمية</span>
-            <h2 class="title">مركز الابتكار</h2>
-          </div>
+          <h2 class="title">مركز الابتكار</h2>
           <div class="glass-box">
             <p class="desc">هو مبادرة أطلقتها هيئة الحكومة الرقمية ليكون المحفز الوطني لتبني الابتكار والتقنيات الناشئة
               في القطاع الحكومي. يهدف المركز إلى تشكيل مستقبل الحكومة الرقمية وتعزيز مسيرتها الاستراتيجية من خلال تصميم
@@ -799,10 +743,7 @@
 
         <!-- 02 -->
         <div class="text-slot" data-scene="1">
-          <div class="title-wrap">
-            <span class="scene-label">مختبر ٠٢ — الشمولية الرقمية</span>
-            <h2 class="title">مختبر الشمولية الرقمية</h2>
-          </div>
+          <h2 class="title">مختبر الشمولية الرقمية</h2>
           <div class="glass-box">
             <ul class="tags">
               <li>بيئة متكاملة للاختبار والرصد</li>
@@ -818,10 +759,7 @@
 
         <!-- 03 -->
         <div class="text-slot" data-scene="2">
-          <div class="title-wrap">
-            <span class="scene-label">منطقة ٠٣ — قصص النجاح</span>
-            <h2 class="title">منطقة قصص النجاح</h2>
-          </div>
+          <h2 class="title">منطقة قصص النجاح</h2>
           <div class="glass-box">
             <p class="desc">منصة إلهام صُممت لإبراز النماذج الوطنية المتميزة في مسيرة التحول الرقمي. تهدف المنطقة إلى
               توثيق واستعراض أفضل الممارسات وحالات الاستخدام النوعية للجهات الحكومية، لتكون مرجعاً وحافزاً لتبني
@@ -831,10 +769,7 @@
 
         <!-- 04 -->
         <div class="text-slot" data-scene="3">
-          <div class="title-wrap">
-            <span class="scene-label">مختبر ٠٤ — التقنيات الناشئة</span>
-            <h2 class="title">مختبر التقنيات الناشئة ونماذج الاعمال</h2>
-          </div>
+          <h2 class="title">مختبر التقنيات الناشئة ونماذج الاعمال</h2>
           <div class="glass-box">
             <ul class="tags">
               <li>الذكاء الاصطناعي</li>
@@ -849,10 +784,7 @@
 
         <!-- 05 -->
         <div class="text-slot" data-scene="4">
-          <div class="title-wrap">
-            <span class="scene-label">مختبر ٠٥ — التجارب التعليمية</span>
-            <h2 class="title">مختبر تصميم التجارب التعليمية</h2>
-          </div>
+          <h2 class="title">مختبر تصميم التجارب التعليمية</h2>
           <div class="glass-box">
             <ul class="tags">
               <li>تصميم التجارب التعليمية المبتكرة</li>
@@ -866,10 +798,7 @@
 
         <!-- 06 -->
         <div class="text-slot" data-scene="5">
-          <div class="title-wrap">
-            <span class="scene-label">مختبر ٠٦ — التجارب الغامرة</span>
-            <h2 class="title">مختبر تصميم التجارب الغامرة</h2>
-          </div>
+          <h2 class="title">مختبر تصميم التجارب الغامرة</h2>
           <div class="glass-box">
             <ul class="tags">
               <li>تصميم وتطوير التجارب الغامرة المبتكرة</li>
