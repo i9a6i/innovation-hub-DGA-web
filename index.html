@@ -268,7 +268,7 @@
     /* TEXT SLOT: Liquid Glass UI */
     .text-slot {
       position: absolute;
-      bottom: 5vh;
+      bottom: 8vh;
       left: 50%;
       width: 92vw;
       max-width: 1400px;
@@ -280,7 +280,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 1.5rem;
+      gap: 2.4rem;
       z-index: 10;
     }
 
@@ -294,15 +294,31 @@
     }
 
     /* Title OUTSIDE glass box */
+    .scene-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dga-purple-mid);
+      opacity: 0.85;
+      margin-bottom: -1.6rem;
+      text-shadow: 0 0 12px rgba(122, 42, 148, 0.5);
+    }
+
     .title {
-      font-size: clamp(1.6rem, 3.8vw, 3rem);
+      font-size: clamp(1.7rem, 3.8vw, 3.1rem);
       font-weight: 700;
-      line-height: 1.2;
-      background: linear-gradient(100deg, #fff 0%, #00B5E2 45%, #7A2A94 100%);
+      line-height: 1.15;
+      letter-spacing: 0.04em;
+      background: linear-gradient(110deg,
+        #f5f0ff 0%,
+        #d4bcff 35%,
+        #a869c8 70%,
+        #7A2A94 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 4px 24px rgba(0, 181, 226, 0.35));
+      filter: drop-shadow(0 2px 18px rgba(122, 42, 148, 0.45));
       margin: 0;
       white-space: nowrap !important;
       display: block !important;
@@ -728,6 +744,7 @@
 
         <!-- 01 -->
         <div class="text-slot" data-scene="0">
+          <span class="scene-label">مركز الابتكار — هيئة الحكومة الرقمية</span>
           <h2 class="title">مركز الابتكار</h2>
           <div class="glass-box">
             <p class="desc">هو مبادرة أطلقتها هيئة الحكومة الرقمية ليكون المحفز الوطني لتبني الابتكار والتقنيات الناشئة
@@ -738,6 +755,7 @@
 
         <!-- 02 -->
         <div class="text-slot" data-scene="1">
+          <span class="scene-label">مختبر ٠٢ — الشمولية الرقمية</span>
           <h2 class="title">مختبر الشمولية الرقمية</h2>
           <div class="glass-box">
             <ul class="tags">
@@ -754,6 +772,7 @@
 
         <!-- 03 -->
         <div class="text-slot" data-scene="2">
+          <span class="scene-label">منطقة ٠٣ — قصص النجاح</span>
           <h2 class="title">منطقة قصص النجاح</h2>
           <div class="glass-box">
             <p class="desc">منصة إلهام صُممت لإبراز النماذج الوطنية المتميزة في مسيرة التحول الرقمي. تهدف المنطقة إلى
@@ -764,6 +783,7 @@
 
         <!-- 04 -->
         <div class="text-slot" data-scene="3">
+          <span class="scene-label">مختبر ٠٤ — التقنيات الناشئة</span>
           <h2 class="title">مختبر التقنيات الناشئة ونماذج الاعمال</h2>
           <div class="glass-box">
             <ul class="tags">
@@ -779,6 +799,7 @@
 
         <!-- 05 -->
         <div class="text-slot" data-scene="4">
+          <span class="scene-label">مختبر ٠٥ — التجارب التعليمية</span>
           <h2 class="title">مختبر تصميم التجارب التعليمية</h2>
           <div class="glass-box">
             <ul class="tags">
@@ -793,6 +814,7 @@
 
         <!-- 06 -->
         <div class="text-slot" data-scene="5">
+          <span class="scene-label">مختبر ٠٦ — التجارب الغامرة</span>
           <h2 class="title">مختبر تصميم التجارب الغامرة</h2>
           <div class="glass-box">
             <ul class="tags">
