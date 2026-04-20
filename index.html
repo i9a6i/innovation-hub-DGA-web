@@ -183,6 +183,23 @@
         rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 35%);
     }
 
+    /* Radial Vignette */
+    .radial-vignette {
+      position: absolute; inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%);
+    }
+
+    /* Grain Overlay */
+    .grain-overlay {
+      position: absolute; inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
     /* ─── TEXT CONTENT (per-scene, crossfaded) ──────────── */
     .text-layer {
       position: absolute;
@@ -517,6 +534,8 @@
       </div>
 
       <div class="global-vignette"></div>
+      <div class="radial-vignette"></div>
+      <div class="grain-overlay"></div>
 
       <!-- Side panels (one active at a time, alternating side) -->
       <div class="side-panel panel-right" id="panel-right"></div>
