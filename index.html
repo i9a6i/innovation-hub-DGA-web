@@ -1085,8 +1085,9 @@
       } else {
         nav.style.opacity = '';
         prog.style.opacity = '';
-        // Only show indicators from scene 1 onwards (Digital Inclusion)
-        if (idx >= 1) {
+        // Only show indicators from scene 1 up to scene 4 (Educational)
+        // Hide during scene 5 (Immersive) and scene 6 (Outro)
+        if (idx >= 1 && idx <= 4) {
           widget.classList.add('show');
         } else {
           widget.classList.remove('show');
