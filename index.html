@@ -48,7 +48,12 @@
     }
 
     :root {
-      --grad: linear-gradient(135deg, #A855F7 0%, #7C3AED 45%, #06B6D4 100%);
+      --dga-purple-dark: #2D1E5F;
+      --dga-purple-mid: #7A2A94;
+      --dga-cyan: #00B5E2;
+      --grad: linear-gradient(135deg, var(--dga-purple-dark) 0%, var(--dga-purple-mid) 50%, var(--dga-cyan) 100%);
+      --glass: rgba(0, 0, 0, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.1);
     }
 
     body {
@@ -139,6 +144,8 @@
         visibility: hidden;
       }
     }
+
+    /* ─── (Selection screen removed — direct start) ─────── */
 
     /* ─── NAV ───────────────────────────────────────────── */
     #nav {
@@ -322,7 +329,7 @@
     .tags-label {
       font-size: 0.8rem;
       font-weight: 600;
-      color: #06B6D4;
+      color: var(--dga-cyan);
       letter-spacing: 0.15em;
       margin-bottom: 0.6rem;
       text-transform: uppercase;
@@ -410,9 +417,9 @@
 
     .outro-cta:hover {
       background: rgba(255, 255, 255, 0.15);
-      border-color: #06B6D4;
+      border-color: var(--dga-cyan);
       transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 15px 30px rgba(6, 182, 212, 0.3);
+      box-shadow: 0 15px 30px rgba(0, 181, 226, 0.3);
     }
 
     .outro-logos {
@@ -626,7 +633,7 @@
     }
 
     .year-tab.active {
-      background: #06B6D4;
+      background: var(--dga-cyan);
       color: #fff;
     }
 
@@ -680,8 +687,8 @@
     }
 
     .trend-neutral {
-      color: #06B6D4;
-      background: rgba(6, 182, 212, 0.1);
+      color: var(--dga-cyan);
+      background: rgba(0, 181, 226, 0.1);
     }
 
     .ind-value {
@@ -719,6 +726,7 @@
 </head>
 
 <body>
+
 
   <!-- ══ INTRO ══════════════════════════════════════════ -->
   <div id="intro">
@@ -795,12 +803,12 @@
 
   <!-- ══ PROGRESS DOTS ══════════════════════════════════ -->
   <div id="progress">
-    <div class="dot" style="--dot-color: #06B6D4;" data-title="واجهة المركز" data-idx="0"></div>
-    <div class="dot" style="--dot-color: #10B981;" data-title="الشمولية الرقمية" data-idx="1"></div>
-    <div class="dot" style="--dot-color: #F59E0B;" data-title="قصص النجاح" data-idx="2"></div>
-    <div class="dot" style="--dot-color: #8B5CF6;" data-title="التقنيات الناشئة" data-idx="3"></div>
-    <div class="dot" style="--dot-color: #EC4899;" data-title="التجارب التعليمية" data-idx="4"></div>
-    <div class="dot" style="--dot-color: #3B82F6;" data-title="التجارب الغامرة" data-idx="5"></div>
+    <div class="dot" style="--dot-color: #00B5E2;" data-title="واجهة المركز" data-idx="0"></div>
+    <div class="dot" style="--dot-color: #7A2A94;" data-title="الشمولية الرقمية" data-idx="1"></div>
+    <div class="dot" style="--dot-color: #00B5E2;" data-title="قصص النجاح" data-idx="2"></div>
+    <div class="dot" style="--dot-color: #2D1E5F;" data-title="التقنيات الناشئة" data-idx="3"></div>
+    <div class="dot" style="--dot-color: #7A2A94;" data-title="التجارب التعليمية" data-idx="4"></div>
+    <div class="dot" style="--dot-color: #00B5E2;" data-title="التجارب الغامرة" data-idx="5"></div>
   </div>
 
   <!-- ══ TIMELINE ═══════════════════════════════════════ -->
@@ -1132,7 +1140,6 @@
         targetTime = localProgress * v.duration;
         smoothed += (targetTime - smoothed) * LERP;
 
-        // Always update if we are scrolling to make it feel mapped directly to the mouse
         if (Math.abs(v.currentTime - smoothed) > 0.005) {
           v.currentTime = smoothed;
         }
@@ -1143,10 +1150,8 @@
         let visible = false;
         if (i === sceneIdx) {
           if (i === 0) {
-            // Scene 1: wait for door to open (approx 45% into the scene)
             visible = localProgress >= 0.45 && localProgress <= 0.88;
           } else if (i === SCENE_COUNT - 1) {
-            // Outro: show then fade out at the very end
             if (localProgress >= 0.1 && localProgress < 0.85) {
               visible = true;
               slot.style.opacity = "";
@@ -1159,7 +1164,6 @@
             visible = localProgress >= 0.12 && localProgress <= 0.88;
           }
         } else {
-          // Reset style for inactive slots
           if (slot.style.opacity) slot.style.opacity = "";
         }
         slot.classList.toggle('visible', visible);
@@ -1172,13 +1176,13 @@
     }
     requestAnimationFrame(tick);
 
-    // Reveal chrome after intro
+    // Auto-start experience after intro
     setTimeout(() => {
       nav.classList.add('show');
       prog.classList.add('show');
       hint.classList.add('show');
       setActiveScene(0);
-    }, 5500); // Trigger after intro animation ends
+    }, 5500);
   </script>
 
 </body>
