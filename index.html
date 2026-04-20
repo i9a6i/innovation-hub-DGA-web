@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مركز الابتكار — هيئة الحكومة الرقمية</title>
+  <style>
+
+    /* ─── FONTS ─────────────────────────────────────────── */
+    @font-face {
+      font-family: 'Diodrum';
+      src: url('اللوقوهات والخط والالوان/02 Font-20251021T004517Z-1-001/02 Font/Diodrum/DiodrumArabic-Light.ttf') format('truetype');
+      font-weight: 300;
+    }
+    @font-face {
+      font-family: 'Diodrum';
+      src: url('اللوقوهات والخط والالوان/02 Font-20251021T004517Z-1-001/02 Font/Diodrum/DiodrumArabic-Regular.ttf') format('truetype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Diodrum';
+      src: url('اللوقوهات والخط والالوان/02 Font-20251021T004517Z-1-001/02 Font/Diodrum/DiodrumArabic-Medium.ttf') format('truetype');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'Diodrum';
+      src: url('اللوقوهات والخط والالوان/02 Font-20251021T004517Z-1-001/02 Font/Diodrum/DiodrumArabic-Semibold.ttf') format('truetype');
+      font-weight: 600;
+    }
+    @font-face {
+      font-family: 'Diodrum';
+      src: url('اللوقوهات والخط والالوان/02 Font-20251021T004517Z-1-001/02 Font/Diodrum/DiodrumArabic-Bold.ttf') format('truetype');
+      font-weight: 700;
+    }
+
+    /* ─── BASE ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --grad: linear-gradient(135deg, #A855F7 0%, #7C3AED 45%, #06B6D4 100%);
+    }
+
+    body {
+      background: #000; /* Black background for fade-to-black transitions */
+      color: #fff;
+      font-family: 'Diodrum', 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── INTRO ANIMATION ───────────────────────────────── */
+    #intro {
+      position: fixed; inset: 0; z-index: 3000;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      animation: introOut 0.8s ease-in-out 5s forwards;
+    }
+
+    #logo-container {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: clamp(300px, 40vw, 500px);
+      transform: translate(-50%, -50%) scale(2.5);
+      opacity: 0;
+      animation: logoAnim 4.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    #intro-logo-color, #intro-logo-white {
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #intro-logo-white {
+      filter: brightness(0) invert(1);
+      z-index: 2;
+      animation: fadeOutWhite 1.5s ease-in-out 2.8s forwards;
+    }
+
+    #intro-logo-color {
+      z-index: 1;
+    }
+
+    @keyframes logoAnim {
+      0%   { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+      15%  { transform: translate(-50%, -50%) scale(2); opacity: 1; }
+      80%  { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeOutWhite {
+      to { opacity: 0; }
+    }
+
+    @keyframes introOut {
+      from { opacity: 1; }
+      to   { opacity: 0; pointer-events: none; visibility: hidden; }
+    }
+
+    /* ─── NAV ───────────────────────────────────────────── */
+    #nav {
+      position: fixed; top: 1.5rem; right: 2rem;
+      z-index: 200;
+      opacity: 0;
+      transition: opacity 0.8s ease 5.4s;
+      mix-blend-mode: screen;
+    }
+    #nav.show { opacity: 0.8; }
+    #nav img { width: 72px; }
+
+    /* ─── TIMELINE (single scroll driver) ───────────────── */
+    #timeline {
+      position: relative;
+      width: 100%;
+      /* 6 scenes × 200vh for calm, gliding pace */
+      height: 1260vh;
+    }
+
+    /* ─── STAGE (sticky viewport) ───────────────────────── */
+    .stage {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
+
+    /* ─── VIDEOS (all stacked) ──────────────────────────── */
+    .videos {
+      position: absolute; inset: 0;
+      z-index: 0;
+      background: #000; /* Black behind videos */
+    }
+    .scene-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+    }
+
+    /* ─── SIDE GRADIENT PANEL (for text legibility) ─────── */
+    .side-panel {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 55%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .side-panel.active { opacity: 1; }
+
+    .panel-right {
+      right: 0;
+      background: linear-gradient(
+        to left,
+        rgba(0,0,0,0.6) 0%,
+        rgba(10,8,36,0.4) 35%,
+        rgba(0,0,0,0.1)  70%,
+        rgba(0,0,0,0)    100%
+      );
+    }
+    .panel-left {
+      left: 0;
+      background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.6) 0%,
+        rgba(10,8,36,0.4) 35%,
+        rgba(0,0,0,0.1)  70%,
+        rgba(0,0,0,0)    100%
+      );
+    }
+
+    .global-vignette {
+      position: absolute; inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(to top,
+        rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 35%);
+    }
+
+    /* ─── TEXT CONTENT (per-scene, crossfaded) ──────────── */
+    .text-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* TEXT SLOT: Liquid Glass UI */
+    .text-slot {
+      position: absolute;
+      top: 50%;
+      width: min(550px, 45vw);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .text-slot.visible {
+      opacity: 1;
+      transform: translateY(-50%);
+    }
+    .text-slot:not(.visible) {
+      transform: translateY(calc(-50% + 20px));
+    }
+
+    .slot-right { right: 5vw; }
+    .slot-left  { left: 5vw; }
+
+    /* Title OUTSIDE glass box */
+    .title {
+      font-size: clamp(2rem, 3.2vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.6);
+      margin: 0;
+    }
+
+    /* Glass Box */
+    .glass-box {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(25px) saturate(130%);
+      -webkit-backdrop-filter: blur(25px) saturate(130%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 28px;
+      padding: 2.2rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .tags-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #06B6D4;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.85rem;
+      text-transform: uppercase;
+    }
+    .tags {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+    .tags li {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.95);
+      white-space: nowrap;
+    }
+
+    .desc {
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      font-weight: 400;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      margin: 0;
+    }
+
+    /* ─── PROGRESS DOTS ─────────────────────────────────── */
+    #progress {
+      position: fixed;
+      top: 50%; left: 1.8rem;
+      transform: translateY(-50%);
+      z-index: 150;
+      display: flex; flex-direction: column;
+      gap: 0.8rem;
+      opacity: 0;
+      transition: opacity 0.8s ease 5.5s;
+    }
+    #progress.show { opacity: 0.7; }
+
+    #progress .dot {
+      width: 5px; height: 24px;
+      background: rgba(255,255,255,0.22);
+      border-radius: 4px;
+      transition: all 0.45s ease;
+    }
+    #progress .dot.active {
+      background: linear-gradient(to bottom, #A855F7, #06B6D4);
+      height: 40px;
+    }
+
+    /* ─── SCROLL HINT ───────────────────────────────────── */
+    .scroll-hint {
+      position: fixed;
+      bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.45rem;
+      opacity: 0;
+      transition: opacity 0.8s ease 5.6s;
+      pointer-events: none;
+    }
+    .scroll-hint.show { opacity: 0.6; animation: bob 2.4s ease-in-out infinite; }
+    .scroll-hint.hide { opacity: 0 !important; }
+
+    .scroll-hint span {
+      font-size: 0.7rem; letter-spacing: 0.22em;
+      color: #fff; font-weight: 300;
+    }
+    .chev {
+      width: 20px; height: 20px;
+      border-right: 2px solid rgba(255,255,255,0.7);
+      border-bottom: 2px solid rgba(255,255,255,0.7);
+      transform: rotate(45deg);
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(8px); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ══ INTRO ══════════════════════════════════════════ -->
+  <div id="intro">
+    <div id="logo-container">
+      <img id="intro-logo-color"
+           src="اللوقوهات والخط والالوان/01 Logo-20251021T004519Z-1-001/01 Logo/PNG/logo -03.png"
+           alt="مركز الابتكار">
+      <img id="intro-logo-white"
+           src="اللوقوهات والخط والالوان/01 Logo-20251021T004519Z-1-001/01 Logo/PNG/logo -03.png"
+           alt="مركز الابتكار">
+    </div>
+  </div>
+
+  <!-- ══ NAV ════════════════════════════════════════════ -->
+  <div id="nav">
+    <img src="اللوقوهات والخط والالوان/01 Logo-20251021T004519Z-1-001/01 Logo/PNG/logo -02.png" alt="DGA">
+  </div>
+
+  <!-- ══ PROGRESS DOTS ══════════════════════════════════ -->
+  <div id="progress">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+
+  <!-- ══ TIMELINE ═══════════════════════════════════════ -->
+  <div id="timeline">
+    <div class="stage">
+
+      <!-- Videos (all mounted) -->
+      <div class="videos">
+        <!-- 01 -->
+        <video class="scene-video" data-idx="0" muted playsinline preload="auto" disablepictureinpicture>
+          <source src="واجهة مركز الابتكار والبداية  01/المقاطع/البداية.mp4" type="video/mp4">
+        </video>
+        <!-- 02 -->
+        <video class="scene-video" data-idx="1" muted playsinline preload="auto" disablepictureinpicture>
+          <source src="مختبر الشمولية الرقمية 02/المقاطع/مختبر الشمولية الرقمية.mp4" type="video/mp4">
+        </video>
+        <!-- 03 -->
+        <video class="scene-video" data-idx="2" muted playsinline preload="auto" disablepictureinpicture>
+          <source src="منطقة عرض قصص النجاح 03/المقاطع/منطقة وشاشة قصص النجاح.mp4" type="video/mp4">
+        </video>
+        <!-- 04 -->
+        <video class="scene-video" data-idx="3" muted playsinline preload="auto" disablepictureinpicture>
+          <source src="مختبر الذكاء الاصطناعي التقنيات الناشئة 04/المقاطع/مختبر الذكاء الاصطناعي والتقنيات الناشئة.mp4" type="video/mp4">
+        </video>
+        <!-- 05 -->
+        <video class="scene-video" data-idx="4" muted playsinline preload="auto" disablepictureinpicture>
+          <source src="05 مختبر تصميم التجارب التعليمية/المقاطع/مختبر تصميم التجارب التعليمية.mp4" type="video/mp4">
+        </video>
+        <!-- 06 -->
+        <video class="scene-video" data-idx="5" muted playsinline preload="auto" disablepictureinpicture>
+          <source src="مختبر تصميم التجارب الغامرة 06/المقاطع/مختبر التجارب الغامرة.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="global-vignette"></div>
+
+      <!-- Side panels (one active at a time, alternating side) -->
+      <div class="side-panel panel-right" id="panel-right"></div>
+      <div class="side-panel panel-left"  id="panel-left"></div>
+
+      <!-- Text slots -->
+      <div class="text-layer">
+        
+        <!-- 01 -->
+        <div class="text-slot slot-right" data-scene="0">
+          <h2 class="title">مركز الابتكار</h2>
+          <div class="glass-box">
+            <p class="desc">هو مبادرة أطلقتها هيئة الحكومة الرقمية ليكون المحفز الوطني لتبني الابتكار والتقنيات الناشئة في القطاع الحكومي. يهدف المركز إلى تشكيل مستقبل الحكومة الرقمية وتعزيز مسيرتها الاستراتيجية من خلال تصميم تجارب وخدمات حكومية مبتكرة.</p>
+          </div>
+        </div>
+        
+        <!-- 02 -->
+        <div class="text-slot slot-left" data-scene="1">
+          <h2 class="title">مختبر الشمولية الرقمية</h2>
+          <div class="glass-box">
+            <div class="tags-label">الممكنات</div>
+            <ul class="tags">
+              <li>بيئة متكاملة للاختبار والرصد</li>
+              <li>أنظمة التتبع المطورة</li>
+              <li>تقنيات تتبع البصر</li>
+              <li>أدوات الوصول الرقمي</li>
+            </ul>
+            <p class="desc">يشمل معمل قابلية الاستخدام ومعمل إمكانية الوصول، وكلاهما مخصصان للاستفادة من أحدث التقنيات لتحسين تجربة المستخدم لمنتجاتها وحلولها الرقمية، لتكون شاملة لجميع فئات المجتمع وبالأخص الأشخاص ذوي الإعاقة وكبار السن.</p>
+          </div>
+        </div>
+        
+        <!-- 03 -->
+        <div class="text-slot slot-right" data-scene="2">
+          <h2 class="title">منطقة قصص النجاح</h2>
+          <div class="glass-box">
+            <p class="desc">منصة إلهام صُممت لإبراز النماذج الوطنية المتميزة في مسيرة التحول الرقمي. تهدف المنطقة إلى توثيق واستعراض أفضل الممارسات وحالات الاستخدام النوعية للجهات الحكومية، لتكون مرجعاً وحافزاً لتبني الابتكار.</p>
+          </div>
+        </div>
+        
+        <!-- 04 -->
+        <div class="text-slot slot-left" data-scene="3">
+          <h2 class="title">مختبر التقنيات الناشئة ونماذج الاعمال</h2>
+          <div class="glass-box">
+            <div class="tags-label">الممكنات</div>
+            <ul class="tags">
+              <li>الذكاء الاصطناعي</li>
+              <li>سلاسل الكتل</li>
+              <li>إنترنت الأشياء</li>
+              <li>طابعات ثلاثية الأبعاد</li>
+            </ul>
+            <p class="desc">يتيح الفرصة لاستكشاف وتصميم أحدث التطورات التقنية مثل: تقنية سلاسل الكتل، والذكاء الاصطناعي، وإنترنت الأشياء مما يسهم في تعزيز الابتكار وتطبيق الحلول المتقدمة.</p>
+          </div>
+        </div>
+        
+        <!-- 05 -->
+        <div class="text-slot slot-right" data-scene="4">
+          <h2 class="title">مختبر تصميم التجارب التعليمية</h2>
+          <div class="glass-box">
+            <div class="tags-label">حالات الاستخدام</div>
+            <ul class="tags">
+              <li>تصميم التجارب التعليمية المبتكرة</li>
+              <li>تقييم التجارب وتحليل سلوك المتعلم</li>
+              <li>تقييم واختبار البرامج التدريبية</li>
+              <li>تقييم الندوات والجلسات الحوارية</li>
+            </ul>
+            <p class="desc">بيئة متخصصة تركز على تطوير التجارب التعليمية المبتكرة واختبارها وتقييمها؛ لتحسين النتائج التعليمية من خلال الاستناد على مبادئ التصميم التعليمي والتفاعل بين الإنسان والحاسوب، وتصميم تجربة المستخدم، وعلم النفس المعرفي. ويهدف المختبر إلى تمكين الجهات الحكومية من تصميم وتطوير حلول تعليمية مبتكرة باستخدام أحدث التقنيات وأفضل الممارسات التي تلبي احتياجات مختلف المتعلمين. ويضم المختبر عدّة مرافق تشمل غرفة للمراقبة والتطوير، وغرفة للتعلم عن بعد، ومساحة للتعليم الحضوري التقليدي، إضافة إلى مساحة متخصصة لاختبار التجارب التعليمية باستخدام تقنيات الواقع الافتراضي.</p>
+          </div>
+        </div>
+        
+        <!-- 06 -->
+        <div class="text-slot slot-left" data-scene="5">
+          <h2 class="title">مختبر تصميم التجارب الغامرة</h2>
+          <div class="glass-box">
+            <div class="tags-label">حالات الاستخدام</div>
+            <ul class="tags">
+              <li>تصميم وتطوير التجارب الغامرة المبتكرة</li>
+              <li>تقديم الاستشارات والتقييم والتصميم</li>
+            </ul>
+            <p class="desc">يعدّ مختبر التجارب الغامرة منشأة متطورة مخصصة للاستخدام الحكومي، تركز على اعتماد أساليب مبتكرة في التصميم. ويضم المختبر مجموعة من التقنيات الغامرة والتفاعلية للجهات الحكومية لاستكشافها وتوظيفها في تطوير الخدمات والتجارب في عدد من المجالات مثل التدريب التصميم التوعية او تقديم الخدمات يحتوي المختبر على تقتيات محاكاه متقدمة.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SCROLL HINT ════════════════════════════════════ -->
+  <div class="scroll-hint" id="scrollHint">
+    <span>مرّر لأسفل</span>
+    <div class="chev"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       JS — continuous scroll, lerped scrub, middle-phase text, and Fade-to-Black
+  ══════════════════════════════════════════════════════ -->
+  <script>
+    const videos       = Array.from(document.querySelectorAll('.scene-video'));
+    const slots        = Array.from(document.querySelectorAll('.text-slot'));
+    const progressDots = document.querySelectorAll('#progress .dot');
+    const panelRight   = document.getElementById('panel-right');
+    const panelLeft    = document.getElementById('panel-left');
+    const timeline     = document.getElementById('timeline');
+    const nav          = document.getElementById('nav');
+    const hint         = document.getElementById('scrollHint');
+    const prog         = document.getElementById('progress');
+
+    const SCENE_COUNT = videos.length;
+
+    // Smooth-scrub state
+    let targetTime = 0;
+    let smoothed   = 0;
+    const LERP     = 0.07;    // gentle glide
+
+    // Pause all videos; control via currentTime
+    videos.forEach(v => {
+      v.pause();
+      v.addEventListener('loadeddata', () => { v.currentTime = 0.01; }, { once: true });
+    });
+
+    let currentScene = -1;
+    function setActiveScene(idx) {
+      if (idx === currentScene) return;
+      currentScene = idx;
+
+      // Progress dot
+      progressDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+
+      // Alternating panel side: slots 0,2,4 on right → right panel; 1,3,5 on left → left panel
+      const onRight = (idx % 2 === 0);
+      panelRight.classList.toggle('active', onRight);
+      panelLeft.classList.toggle('active', !onRight);
+    }
+
+    let prevScene = 0;
+
+    function tick() {
+      const scrollY = window.scrollY;
+      const vh = window.innerHeight;
+      const scrollable = timeline.offsetHeight - vh;
+      const globalProgress = Math.max(0, Math.min(1, scrollY / scrollable));
+
+      const scenePos   = globalProgress * SCENE_COUNT;
+      const sceneIdx   = Math.min(SCENE_COUNT - 1, Math.floor(scenePos));
+      const localProgress = Math.min(1, scenePos - sceneIdx);  // 0 → 1 within scene
+
+      // On scene change, snap smoothed time to avoid long lerp on new video
+      if (sceneIdx !== prevScene) {
+        const v = videos[sceneIdx];
+        if (v && isFinite(v.duration)) smoothed = localProgress * v.duration;
+        prevScene = sceneIdx;
+      }
+
+      setActiveScene(sceneIdx);
+
+      // Scrub active video with lerp
+      const v = videos[sceneIdx];
+      if (v && v.readyState >= 2 && isFinite(v.duration)) {
+        targetTime = localProgress * v.duration;
+        smoothed += (targetTime - smoothed) * LERP;
+        if (Math.abs(v.currentTime - smoothed) > 0.02) {
+          v.currentTime = smoothed;
+        }
+      }
+
+      // FADE TO BLACK TRANSITION LOGIC
+      // Videos background is #000. So we fade the video opacity based on localProgress
+      // Fade in 0 to 0.15, full opacity 0.15 to 0.85, fade out 0.85 to 1.0
+      let activeOpacity = 1;
+      const FADE_MARGIN = 0.15;
+      
+      if (localProgress < FADE_MARGIN) {
+        activeOpacity = localProgress / FADE_MARGIN;
+      } else if (localProgress > 1 - FADE_MARGIN) {
+        activeOpacity = (1.0 - localProgress) / FADE_MARGIN;
+      }
+
+      // Special case: don't fade out at the very end of the website (last scene)
+      if (sceneIdx === SCENE_COUNT - 1 && localProgress > 1 - FADE_MARGIN) {
+        activeOpacity = 1;
+      }
+      
+      // Apply activeOpacity to the current scene video, hide others
+      videos.forEach((vid, i) => {
+        if (i === sceneIdx) {
+          vid.style.opacity = activeOpacity;
+        } else {
+          vid.style.opacity = 0;
+        }
+      });
+
+      // Text visibility: only middle 30%-70% of each scene
+      slots.forEach((slot, i) => {
+        let visible = false;
+        if (i === sceneIdx) {
+          visible = localProgress >= 0.28 && localProgress <= 0.72;
+        }
+        slot.classList.toggle('visible', visible);
+      });
+
+      // Hide scroll hint after user scrolls
+      if (scrollY > 80) hint.classList.add('hide');
+
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    // Reveal chrome after intro
+    setTimeout(() => {
+      nav.classList.add('show');
+      prog.classList.add('show');
+      hint.classList.add('show');
+      setActiveScene(0);
+    }, 5500); // Trigger after intro animation ends
+  </script>
+
+</body>
+</html>
