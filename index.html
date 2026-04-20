@@ -195,7 +195,7 @@
     .text-slot {
       position: absolute;
       top: 50%;
-      width: min(550px, 45vw);
+      width: min(460px, 38vw);
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.8s ease, transform 0.8s ease;
@@ -239,10 +239,10 @@
 
     /* Glass Box */
     .glass-box {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(25px) saturate(130%);
-      -webkit-backdrop-filter: blur(25px) saturate(130%);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(12px) saturate(110%);
+      -webkit-backdrop-filter: blur(12px) saturate(110%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 28px;
       padding: 2.2rem;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
@@ -568,11 +568,11 @@
         }
       }
 
-      // Text visibility: only middle 30%-70% of each scene
+      // Text visibility: Show earlier and hide later (15% to 85%)
       slots.forEach((slot, i) => {
         let visible = false;
         if (i === sceneIdx) {
-          visible = localProgress >= 0.28 && localProgress <= 0.72;
+          visible = localProgress >= 0.12 && localProgress <= 0.88;
         }
         slot.classList.toggle('visible', visible);
       });
