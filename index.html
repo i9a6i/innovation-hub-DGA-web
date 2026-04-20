@@ -96,13 +96,11 @@
     }
 
     #intro-logo-white {
-      filter: brightness(0) invert(1);
-      z-index: 2;
-      animation: fadeOutWhite 1.5s ease-in-out 2.8s forwards;
+      display: none;
     }
 
     #intro-logo-color {
-      z-index: 1;
+      z-index: 2;
     }
 
     @keyframes logoAnim {
@@ -409,19 +407,19 @@
     }
 
     .tags li {
-      background: rgba(0, 181, 226, 0.08);
-      border: 1px solid rgba(0, 181, 226, 0.35);
+      background: rgba(122, 42, 148, 0.1);
+      border: 1px solid rgba(122, 42, 148, 0.4);
       border-radius: 100px;
       padding: 0.3rem 0.8rem;
       font-size: 0.8rem;
       font-weight: 500;
-      color: var(--dga-cyan);
+      color: #c9a0dc;
       white-space: nowrap;
       transition: all 0.3s ease;
     }
 
     .tags li:hover {
-      background: rgba(122, 42, 148, 0.15);
+      background: rgba(122, 42, 148, 0.25);
       border-color: var(--dga-purple-mid);
       color: #fff;
     }
