@@ -298,32 +298,95 @@
       font-size: clamp(1.6rem, 3.8vw, 3rem);
       font-weight: 700;
       line-height: 1.2;
-      color: #fff;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+      background: linear-gradient(100deg, #fff 0%, #00B5E2 45%, #7A2A94 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 4px 24px rgba(0, 181, 226, 0.35));
       margin: 0;
       white-space: nowrap !important;
       display: block !important;
     }
 
     /* Glass Box */
+    @keyframes glowPulse {
+      0%, 100% {
+        box-shadow:
+          0 12px 40px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(0, 181, 226, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.07),
+          0 0 28px rgba(0, 181, 226, 0.08),
+          0 0 60px rgba(45, 30, 95, 0.12);
+      }
+      50% {
+        box-shadow:
+          0 12px 40px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(0, 181, 226, 0.22),
+          inset 0 1px 0 rgba(255, 255, 255, 0.09),
+          0 0 40px rgba(0, 181, 226, 0.14),
+          0 0 80px rgba(122, 42, 148, 0.14);
+      }
+    }
+
     .glass-box {
-      background: rgba(0, 0, 0, 0.12);
-      backdrop-filter: blur(12px) saturate(120%);
-      -webkit-backdrop-filter: blur(12px) saturate(120%);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(4, 4, 18, 0.58);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      border: 1px solid rgba(0, 181, 226, 0.2);
       border-radius: 48px;
       padding: 1.5rem 3.5rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       width: 100%;
       display: block;
-      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, background 0.4s ease, border 0.4s ease;
+      position: relative;
+      animation: glowPulse 4s ease-in-out infinite;
+      transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+                  background 0.45s ease,
+                  border-color 0.45s ease;
+    }
+
+    /* Inner highlight stripe at top */
+    .glass-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 48px;
+      background: linear-gradient(
+        160deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(0, 181, 226, 0.04) 40%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+
+    /* Bottom edge glow line */
+    .glass-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(0, 181, 226, 0.4) 30%,
+        rgba(122, 42, 148, 0.5) 70%,
+        transparent 100%);
+      border-radius: 50%;
+      pointer-events: none;
     }
 
     .glass-box:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-      background: rgba(20, 20, 20, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      transform: translateY(-6px) scale(1.015);
+      background: rgba(6, 5, 25, 0.68);
+      border-color: rgba(0, 181, 226, 0.38);
+      animation-play-state: paused;
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(0, 181, 226, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 0 50px rgba(0, 181, 226, 0.18),
+        0 0 100px rgba(122, 42, 148, 0.15);
     }
 
     .tags-label {
