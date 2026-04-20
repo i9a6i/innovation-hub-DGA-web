@@ -571,6 +571,150 @@
         transform: translateX(-50%) translateY(8px);
       }
     }
+    /* ─── INDICATORS WIDGET ─────────────────────────────── */
+    #indicators-widget {
+      position: fixed;
+      top: 1.5rem;
+      left: 2rem;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      opacity: 0;
+      transition: opacity 0.8s ease 5.4s;
+    }
+
+    #indicators-widget.show {
+      opacity: 1;
+    }
+
+    .widget-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 0.4rem 0.8rem;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      width: fit-content;
+    }
+
+    .widget-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.05em;
+    }
+
+    .year-tabs {
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 100px;
+      padding: 2px;
+    }
+
+    .year-tab {
+      padding: 0.15rem 0.6rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      border-radius: 100px;
+      transition: all 0.3s ease;
+    }
+
+    .year-tab.active {
+      background: #06B6D4;
+      color: #fff;
+    }
+
+    .indicators-list {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .ind-card {
+      background: rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 14px;
+      padding: 0.5rem 0.7rem;
+      min-width: 85px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .ind-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.1rem;
+    }
+
+    .ind-icon {
+      width: 14px;
+      height: 14px;
+      opacity: 0.6;
+    }
+
+    .ind-trend {
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 0.05rem 0.25rem;
+      border-radius: 4px;
+    }
+
+    .trend-up {
+      color: #10B981;
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .trend-down {
+      color: #EF4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .trend-neutral {
+      color: #06B6D4;
+      background: rgba(6, 182, 212, 0.1);
+    }
+
+    .ind-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      transition: opacity 0.2s ease;
+    }
+
+    .ind-label {
+      font-size: 0.58rem;
+      color: rgba(255, 255, 255, 0.45);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      #indicators-widget {
+        top: auto;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 95vw;
+        align-items: center;
+      }
+
+      .indicators-list {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 5px;
+      }
+    }
   </style>
 </head>
 
@@ -589,6 +733,64 @@
   <!-- ══ NAV ════════════════════════════════════════════ -->
   <div id="nav">
     <img src="اللوقوهات والخط والالوان/01 Logo-20251021T004519Z-1-001/01 Logo/PNG/logo -02.png" alt="DGA">
+  </div>
+
+  <!-- ══ STRATEGIC INDICATORS ════════════════════════════ -->
+  <div id="indicators-widget">
+    <div class="widget-header">
+      <span class="widget-title">المؤشرات الاستراتيجية</span>
+      <div class="year-tabs">
+        <div class="year-tab active" onclick="setYear(2026)">2026</div>
+        <div class="year-tab" onclick="setYear(2025)">2025</div>
+      </div>
+    </div>
+    <div class="indicators-list">
+      <!-- 01 -->
+      <div class="ind-card">
+        <div class="ind-top">
+          <svg class="ind-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span class="ind-trend" id="trend-0"></span>
+        </div>
+        <div class="ind-value" id="val-0">913</div>
+        <div class="ind-label">المستفيدون</div>
+      </div>
+      <!-- 02 -->
+      <div class="ind-card">
+        <div class="ind-top">
+          <svg class="ind-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          <span class="ind-trend" id="trend-1"></span>
+        </div>
+        <div class="ind-value" id="val-1">27</div>
+        <div class="ind-label">الزيارات الرسمية</div>
+      </div>
+      <!-- 03 -->
+      <div class="ind-card">
+        <div class="ind-top">
+          <svg class="ind-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="ind-trend" id="trend-2"></span>
+        </div>
+        <div class="ind-value" id="val-2">19</div>
+        <div class="ind-label">الجهات الحكومية</div>
+      </div>
+      <!-- 04 -->
+      <div class="ind-card">
+        <div class="ind-top">
+          <svg class="ind-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          <span class="ind-trend" id="trend-3"></span>
+        </div>
+        <div class="ind-value" id="val-3">18</div>
+        <div class="ind-label">الخدمات المقدمة</div>
+      </div>
+      <!-- 05 -->
+      <div class="ind-card">
+        <div class="ind-top">
+          <svg class="ind-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span class="ind-trend" id="trend-4"></span>
+        </div>
+        <div class="ind-value" id="val-4">20</div>
+        <div class="ind-label">الفعاليات</div>
+      </div>
+    </div>
   </div>
 
   <!-- ══ PROGRESS DOTS ══════════════════════════════════ -->
@@ -772,6 +974,56 @@
     const nav = document.getElementById('nav');
     const hint = document.getElementById('scrollHint');
     const prog = document.getElementById('progress');
+    const widget = document.getElementById('indicators-widget');
+
+    // Strategic Data
+    const indicatorData = {
+      2026: {
+        vals: ["913", "27", "19", "18", "20"],
+        trends: [
+          { txt: "▼ 69%", cls: "trend-down" },
+          { txt: "▼ 65%", cls: "trend-down" },
+          { txt: "▼ 83%", cls: "trend-down" },
+          { txt: "▼ 62%", cls: "trend-down" },
+          { txt: "0%", cls: "trend-neutral" }
+        ]
+      },
+      2025: {
+        vals: ["2,930", "77", "109", "47", "65"],
+        trends: [
+          { txt: "▲ 221%", cls: "trend-up" },
+          { txt: "▲ 185%", cls: "trend-up" },
+          { txt: "▲ 474%", cls: "trend-up" },
+          { txt: "▲ 161%", cls: "trend-up" },
+          { txt: "0%", cls: "trend-neutral" }
+        ]
+      }
+    };
+
+    function setYear(year) {
+      // Toggle tabs
+      document.querySelectorAll('.year-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.innerText == year);
+      });
+
+      const data = indicatorData[year];
+      data.vals.forEach((v, i) => {
+        const el = document.getElementById(`val-${i}`);
+        el.style.opacity = 0;
+        setTimeout(() => {
+          el.innerText = v;
+          el.style.opacity = 1;
+        }, 200);
+      });
+      data.trends.forEach((t, i) => {
+        const el = document.getElementById(`trend-${i}`);
+        el.innerText = t.txt;
+        el.className = `ind-trend ${t.cls}`;
+      });
+    }
+
+    // Init 2026
+    setYear(2026);
 
     const SCENE_COUNT = slots.length;
 
@@ -829,9 +1081,11 @@
       if (idx === SCENE_COUNT - 1) {
         nav.style.opacity = '0';
         prog.style.opacity = '0';
+        widget.classList.remove('show');
       } else {
         nav.style.opacity = '';
         prog.style.opacity = '';
+        widget.classList.add('show');
       }
 
       // Alternating panel side: slots 0,2,4 on right → right panel; 1,3,5 on left → left panel
