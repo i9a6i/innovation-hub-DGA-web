@@ -83,8 +83,8 @@
     }
 
     @keyframes logoAnim {
-      0%   { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
-      15%  { transform: translate(-50%, -50%) scale(2); opacity: 1; }
+      0%   { transform: translate(-50%, -50%) scale(8); opacity: 0; }
+      20%  { transform: translate(-50%, -50%) scale(3); opacity: 1; }
       80%  { transform: translate(-50%, -50%) scale(1); opacity: 1; }
       100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
     }
@@ -113,8 +113,8 @@
     #timeline {
       position: relative;
       width: 100%;
-      /* 6 scenes × 200vh for calm, gliding pace */
-      height: 1260vh;
+      /* 7 scenes (6 videos + 1 outro) × 210vh */
+      height: 1470vh;
     }
 
     /* ─── STAGE (sticky viewport) ───────────────────────── */
@@ -194,10 +194,10 @@
     /* TEXT SLOT: Liquid Glass UI */
     .text-slot {
       position: absolute;
-      bottom: 6vh;
+      bottom: 5vh;
       left: 50%;
-      width: 90vw;
-      max-width: 1100px;
+      width: 85vw;
+      max-width: 800px;
       opacity: 0;
       transform: translate(-50%, 30px);
       transition: opacity 0.8s ease, transform 0.8s ease;
@@ -206,7 +206,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 1.2rem;
+      gap: 0.8rem;
       z-index: 10;
     }
     .text-slot.visible {
@@ -219,7 +219,7 @@
 
     /* Title OUTSIDE glass box */
     .title {
-      font-size: clamp(2.2rem, 3.5vw, 3rem);
+      font-size: clamp(1.8rem, 2.5vw, 2.2rem);
       font-weight: 700;
       line-height: 1.2;
       color: #fff;
@@ -229,54 +229,105 @@
 
     /* Glass Box */
     .glass-box {
-      background: rgba(10, 10, 10, 0.35);
-      backdrop-filter: blur(16px) saturate(120%);
-      -webkit-backdrop-filter: blur(16px) saturate(120%);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 1.8rem 3rem;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-      width: 100%;
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px) saturate(100%);
+      -webkit-backdrop-filter: blur(10px) saturate(100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.2rem 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: auto;
+      display: inline-block;
       transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, background 0.4s ease, border 0.4s ease;
     }
     .glass-box:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
-      background: rgba(30, 30, 30, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      background: rgba(20, 20, 20, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     .tags-label {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: #06B6D4;
       letter-spacing: 0.15em;
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.6rem;
       text-transform: uppercase;
     }
     .tags {
-      display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+      display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
       list-style: none;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
     }
     .tags li {
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.2);
       border-radius: 100px;
-      padding: 0.35rem 1rem;
-      font-size: 0.85rem;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.8rem;
       font-weight: 500;
       color: rgba(255,255,255,0.95);
       white-space: nowrap;
     }
 
     .desc {
-      font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+      font-size: clamp(0.9rem, 1vw, 1.05rem);
       font-weight: 400;
-      line-height: 1.8;
+      line-height: 1.6;
       color: rgba(255,255,255,0.9);
       text-shadow: 0 1px 4px rgba(0,0,0,0.4);
       margin: 0;
+    }
+
+    /* OUTRO SLOT */
+    .outro-slot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      opacity: 0;
+      transform: translate(-50%, -40%);
+      transition: opacity 1s ease, transform 1s ease;
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
+    .outro-slot.visible {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+    .outro-title {
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 300;
+      color: #fff;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: 2px;
+    }
+    .outro-subtitle {
+      font-size: clamp(1.2rem, 2vw, 1.5rem);
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 4rem;
+    }
+    .outro-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+    }
+    .outro-logos img {
+      height: 70px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
+    }
+    .outro-divider {
+      width: 2px;
+      height: 60px;
+      background: rgba(255,255,255,0.2);
     }
 
     /* ─── PROGRESS DOTS ─────────────────────────────────── */
@@ -505,6 +556,17 @@
             <p class="desc">يعدّ مختبر التجارب الغامرة منشأة متطورة مخصصة للاستخدام الحكومي، تركز على اعتماد أساليب مبتكرة في التصميم. ويضم المختبر مجموعة من التقنيات الغامرة والتفاعلية للجهات الحكومية لاستكشافها وتوظيفها في تطوير الخدمات والتجارب في عدد من المجالات مثل التدريب التصميم التوعية او تقديم الخدمات يحتوي المختبر على تقتيات محاكاه متقدمة.</p>
           </div>
         </div>
+        
+        <!-- 07 (Outro) -->
+        <div class="outro-slot" data-scene="6">
+          <h2 class="outro-title">رحلة نحو المستقبل</h2>
+          <p class="outro-subtitle">شكرًا لزيارتكم مركز الابتكار</p>
+          <div class="outro-logos">
+            <img src="اللوقوهات والخط والالوان/01 Logo-20251021T004519Z-1-001/01 Logo/PNG/logo -02.png" alt="هيئة الحكومة الرقمية">
+            <div class="outro-divider"></div>
+            <img src="اللوقوهات والخط والالوان/01 Logo-20251021T004519Z-1-001/01 Logo/PNG/logo -03.png" alt="مركز الابتكار">
+          </div>
+        </div>
 
       </div>
 
@@ -522,7 +584,7 @@
   ══════════════════════════════════════════════════════ -->
   <script>
     const videos       = Array.from(document.querySelectorAll('.scene-video'));
-    const slots        = Array.from(document.querySelectorAll('.text-slot'));
+    const slots        = Array.from(document.querySelectorAll('.text-slot, .outro-slot'));
     const progressDots = document.querySelectorAll('#progress .dot');
     const panelRight   = document.getElementById('panel-right');
     const panelLeft    = document.getElementById('panel-left');
@@ -531,7 +593,7 @@
     const hint         = document.getElementById('scrollHint');
     const prog         = document.getElementById('progress');
 
-    const SCENE_COUNT = videos.length;
+    const SCENE_COUNT = slots.length;
 
     // Add click listeners to dots to jump to corresponding scene
     progressDots.forEach((dot, i) => {
@@ -567,12 +629,25 @@
       currentScene = idx;
 
       // Progress dot
-      progressDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      if (idx < progressDots.length) {
+        progressDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      } else {
+        progressDots.forEach(d => d.classList.remove('active'));
+      }
+
+      // Hide chrome during outro (scene 6)
+      if (idx === SCENE_COUNT - 1) {
+        nav.style.opacity = '0';
+        prog.style.opacity = '0';
+      } else {
+        nav.style.opacity = '';
+        prog.style.opacity = '';
+      }
 
       // Alternating panel side: slots 0,2,4 on right → right panel; 1,3,5 on left → left panel
       const onRight = (idx % 2 === 0);
-      panelRight.classList.toggle('active', onRight);
-      panelLeft.classList.toggle('active', !onRight);
+      panelRight.classList.toggle('active', onRight && idx !== SCENE_COUNT - 1);
+      panelLeft.classList.toggle('active', !onRight && idx !== SCENE_COUNT - 1);
     }
 
     let prevScene = 0;
@@ -613,11 +688,19 @@
         }
       }
 
-      // Text visibility: Show earlier and hide later (15% to 85%)
+      // Text visibility
       slots.forEach((slot, i) => {
         let visible = false;
         if (i === sceneIdx) {
-          visible = localProgress >= 0.12 && localProgress <= 0.88;
+          if (i === 0) {
+            // Scene 1: wait for door to open (approx 45% into the scene)
+            visible = localProgress >= 0.45 && localProgress <= 0.88;
+          } else if (i === SCENE_COUNT - 1) {
+            // Outro: show all the way
+            visible = localProgress >= 0.1;
+          } else {
+            visible = localProgress >= 0.12 && localProgress <= 0.88;
+          }
         }
         slot.classList.toggle('visible', visible);
       });
