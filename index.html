@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Deployment Trigger: Reverting to stable version -->
+<!-- Deploy v7: clean title, fix text clipping -->
 <html lang="ar" dir="rtl">
 
 <head>
@@ -297,18 +297,14 @@
     .title {
       font-size: clamp(2rem, 4.5vw, 3.8rem);
       font-weight: 700;
-      line-height: 1.1;
+      line-height: 1.5;
       letter-spacing: 0.04em;
-      background: linear-gradient(110deg,
-        #f5f0ff 0%,
-        #d4bcff 35%,
-        #a869c8 70%,
-        #7A2A94 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      filter: drop-shadow(0 2px 22px rgba(122, 42, 148, 0.5));
+      color: #fff;
+      text-shadow:
+        0 2px 24px rgba(122, 42, 148, 0.55),
+        0 0 60px rgba(45, 30, 95, 0.3);
       margin: 0;
+      padding-bottom: 0.1em;
       white-space: nowrap !important;
       display: block !important;
     }
