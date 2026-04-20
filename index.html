@@ -342,6 +342,36 @@
       object-fit: contain;
     }
 
+    .qr-container {
+      margin-bottom: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s ease 0.5s;
+    }
+    .outro-slot.visible .qr-container {
+      opacity: 0.9;
+      transform: translateY(0);
+    }
+    .qr-frame {
+      padding: 10px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qr-container span {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.05em;
+      font-weight: 400;
+    }
+
     /* ─── PROGRESS DOTS ─────────────────────────────────── */
     #progress {
       position: fixed;
@@ -578,6 +608,13 @@
             حجز مساحات ومختبرات المركز
           </a>
 
+          <div class="qr-container">
+            <div class="qr-frame">
+              <div id="qrcode"></div>
+            </div>
+            <span>امسح الرمز لتجربة الموقع على جوالك</span>
+          </div>
+
           <div class="outro-logos">
             <img src="اللوقوهات والخط والالوان/01 Logo-20251021T004519Z-1-001/01 Logo/PNG/logo -03.png" alt="مركز الابتكار">
           </div>
@@ -594,6 +631,9 @@
     <div class="chev"></div>
   </div>
 
+  <!-- QR Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
   <!-- ══════════════════════════════════════════════════════
        JS — continuous scroll, lerped scrub, middle-phase text, and Fade-to-Black
   ══════════════════════════════════════════════════════ -->
@@ -609,6 +649,16 @@
     const prog         = document.getElementById('progress');
 
     const SCENE_COUNT = slots.length;
+
+    // Generate QR Code for current URL
+    new QRCode(document.getElementById("qrcode"), {
+      text: window.location.href,
+      width: 120,
+      height: 120,
+      colorDark : "#000000",
+      colorLight : "#ffffff",
+      correctLevel : QRCode.CorrectLevel.H
+    });
 
     // Add click listeners to dots to jump to corresponding scene
     progressDots.forEach((dot, i) => {
