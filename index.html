@@ -214,6 +214,18 @@
 
     .slot-right { right: 5vw; }
     .slot-left  { left: 5vw; }
+    .slot-center {
+      left: 50%;
+      transform: translate(-50%, 20px);
+      align-items: center;
+      text-align: center;
+    }
+    .text-slot.slot-center.visible {
+      transform: translate(-50%, -50%);
+    }
+    .text-slot.slot-center:not(.visible) {
+      transform: translate(-50%, calc(-50% + 20px));
+    }
 
     /* Title OUTSIDE glass box */
     .title {
@@ -400,11 +412,11 @@
         </div>
         
         <!-- 02 -->
-        <div class="text-slot slot-left" data-scene="1">
+        <div class="text-slot slot-center" data-scene="1">
           <h2 class="title">مختبر الشمولية الرقمية</h2>
           <div class="glass-box">
             <div class="tags-label">الممكنات</div>
-            <ul class="tags">
+            <ul class="tags" style="justify-content: center;">
               <li>بيئة متكاملة للاختبار والرصد</li>
               <li>أنظمة التتبع المطورة</li>
               <li>تقنيات تتبع البصر</li>
@@ -495,11 +507,12 @@
     // Smooth-scrub state
     let targetTime = 0;
     let smoothed   = 0;
-    const LERP     = 0.07;    // gentle glide
+    const LERP     = 0.25;    // More responsive glide for immediate interactivity
 
     // Pause all videos; control via currentTime
     videos.forEach(v => {
       v.pause();
+      // Use requestVideoFrameCallback if available for smoother visual updates, otherwise fallback
       v.addEventListener('loadeddata', () => { v.currentTime = 0.01; }, { once: true });
     });
 
@@ -548,7 +561,9 @@
       if (v && v.readyState >= 2 && isFinite(v.duration)) {
         targetTime = localProgress * v.duration;
         smoothed += (targetTime - smoothed) * LERP;
-        if (Math.abs(v.currentTime - smoothed) > 0.02) {
+        
+        // Always update if we are scrolling to make it feel mapped directly to the mouse
+        if (Math.abs(v.currentTime - smoothed) > 0.005) {
           v.currentTime = smoothed;
         }
       }
