@@ -62,11 +62,6 @@
       color: #fff;
       font-family: 'Diodrum', 'Segoe UI', sans-serif;
       overflow-x: hidden;
-      cursor: none; /* Hide default mouse on desktop */
-    }
-
-    a, button, .dot, .glass-box, .tags li, .title {
-      cursor: none;
     }
 
     /* ─── INTRO ANIMATION ───────────────────────────────── */
@@ -642,59 +637,18 @@
       transform: rotate(45deg);
     }
 
-    /* ─── CUSTOM CURSOR (MacBook Style) ─────────────────── */
-    #cursor-dot {
-      width: 10px;
-      height: 10px;
-      background: #000;
-      border: 1.5px solid #fff;
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 10000;
-      transform: translate(-50%, -50%);
-      transition: width 0.3s ease, height 0.3s ease, transform 0.2s ease;
-      box-shadow: 0 0 5px rgba(0,0,0,0.5);
-    }
-
+    /* ─── MOUSE GLOW FOLLOWER ─────────────────────────── */
     #cursor-glow {
-      width: 44px;
-      height: 44px;
-      border: 1.5px solid rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.05);
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(122, 42, 148, 0.15) 0%, rgba(0, 181, 226, 0.05) 40%, transparent 70%);
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 5; /* Behind content, above background */
       transform: translate(-50%, -50%);
-      transition: width 0.5s cubic-bezier(0.19, 1, 0.22, 1), 
-                  height 0.5s cubic-bezier(0.19, 1, 0.22, 1), 
-                  border-color 0.4s ease;
-      
-      /* Liquid Glass Simulation */
-      backdrop-filter: blur(2px) saturate(1.2);
-      -webkit-backdrop-filter: blur(2px) saturate(1.2);
-      filter: url(#liquid-glass-refraction); /* The real magic */
-    }
-
-    /* Hover States - Enhanced Liquid Glass */
-    .cursor-hover #cursor-dot {
-      transform: translate(-50%, -50%) scale(0.5);
-      opacity: 0.8;
-    }
-
-    .cursor-hover #cursor-glow {
-      width: 130px;
-      height: 130px;
-      border: 2px solid rgba(255, 255, 255, 0.95);
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 
-        0 10px 40px rgba(0, 0, 0, 0.4),
-        inset 0 0 20px rgba(255, 255, 255, 0.2);
-      
-      /* High-end Refraction + Dispersion */
-      backdrop-filter: blur(12px) brightness(1.1) saturate(1.4) contrast(1.1);
-      -webkit-backdrop-filter: blur(12px) brightness(1.1) saturate(1.4) contrast(1.1);
+      transition: opacity 0.5s ease;
+      filter: blur(20px);
     }
 
     @keyframes bob {
@@ -792,7 +746,6 @@
 <body>
 
 
-  <div id="cursor-dot"></div>
   <div id="cursor-glow"></div>
 
   <!-- ══ INTRO ══════════════════════════════════════════ -->
@@ -1155,65 +1108,27 @@
       setActiveScene(0);
     }, 5500);
 
-    // Custom Cursor Interaction
-    const cursorDot = document.getElementById('cursor-dot');
+    // Mouse Glow Follower logic
     const cursorGlow = document.getElementById('cursor-glow');
     let mouseX = 0, mouseY = 0;
     let ballX = 0, ballY = 0;
-    const cursorLerp = 0.15;
+    const cursorLerp = 0.1; // Smooth following
 
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      
-      // Move the main dot instantly
-      cursorDot.style.left = mouseX + 'px';
-      cursorDot.style.top = mouseY + 'px';
     });
 
-    // Follower animation (smoothed)
-    function animateCursor() {
+    function animateGlow() {
       ballX += (mouseX - ballX) * cursorLerp;
       ballY += (mouseY - ballY) * cursorLerp;
-      
       cursorGlow.style.left = ballX + 'px';
       cursorGlow.style.top = ballY + 'px';
-      
-      requestAnimationFrame(animateCursor);
+      requestAnimationFrame(animateGlow);
     }
-    animateCursor();
-
-    // Hover detection
-    const interactiveElements = document.querySelectorAll('.glass-box, .tags li, .title, .outro-cta, .dot, #nav');
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-    });
+    animateGlow();
   </script>
 
-  <!-- Liquid Glass Refraction Filter (SVG) -->
-  <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
-    <filter id="liquid-glass-refraction">
-      <!-- Chromatic Aberration / Dispersion Simulation -->
-      <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red"/>
-      <feOffset in="red" dx="1.5" dy="0" result="redShift"/>
-      
-      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green"/>
-      
-      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue"/>
-      <feOffset in="blue" dx="-1.5" dy="0" result="blueShift"/>
-      
-      <feMerge>
-        <feMergeNode in="redShift"/>
-        <feMergeNode in="green"/>
-        <feMergeNode in="blueShift"/>
-      </feMerge>
-      
-      <!-- Subtle Refraction Distortion -->
-      <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="1" result="noise" />
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
-    </filter>
-  </svg>
 </body>
 
 </html>
