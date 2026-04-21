@@ -618,6 +618,45 @@
       pointer-events: none;
       z-index: 1;
       opacity: 0.6;
+      transition: opacity 1s ease;
+    }
+
+    #shader-canvas.hidden {
+      opacity: 0;
+    }
+
+    /* Outro specific tweaks */
+    .outro-slot .glass-box {
+      max-width: 600px;
+    }
+
+    .qr-frame {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid var(--dga-cyan);
+      padding: 10px;
+      border-radius: 1.5rem;
+      display: inline-block;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 20px rgba(0, 181, 226, 0.2);
+    }
+
+    .outro-cta {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 1rem 3rem;
+      background: var(--dga-cyan);
+      color: #000;
+      font-weight: 700;
+      border-radius: 1.2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 181, 226, 0.3);
+    }
+
+    .outro-cta:hover {
+      transform: scale(1.05);
+      background: #fff;
+      box-shadow: 0 15px 40px rgba(255, 255, 255, 0.4);
     }
 
     @keyframes bob {
@@ -865,24 +904,26 @@
 
         <!-- 07 (Outro) -->
         <div class="outro-slot" data-scene="6">
-          <h2 class="outro-title">رحلة نحو المستقبل</h2>
-          <p class="outro-subtitle">شكرًا لزيارتكم مركز الابتكار</p>
+          <div class="glass-box">
+            <h2 class="outro-title" style="font-size: 2.5rem; margin-bottom: 1rem;">رحلة نحو المستقبل</h2>
+            <p class="outro-subtitle" style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem;">شكرًا لزيارتكم لمركز الابتكار بهيئة الحكومة الرقمية</p>
 
-          <a href="https://dga.gov.sa/ar/InnovationHub/services/spaces-and-lab-booking" target="_blank"
-            class="outro-cta">
-            حجز مساحات ومختبرات المركز
-          </a>
-
-          <div class="qr-container">
-            <div class="qr-frame">
-              <div id="qrcode"></div>
+            <div class="qr-container">
+              <div class="qr-frame">
+                <div id="qrcode"></div>
+              </div>
+              <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 1.5rem;">امسح الرمز لتجربة الموقع على جوالك</p>
             </div>
-            <span>امسح الرمز لتجربة الموقع على جوالك</span>
-          </div>
 
-          <div class="outro-logos">
-            <img src="اللوقوهات والخط والالوان/01 Logo-20251021T004519Z-1-001/01 Logo/PNG/logo -03.png"
-              alt="مركز الابتكار">
+            <a href="https://dga.gov.sa/ar/InnovationHub/services/spaces-and-lab-booking" target="_blank"
+              class="outro-cta">
+              حجز مساحات ومختبرات المركز
+            </a>
+
+            <div class="outro-logos" style="margin-top: 2rem;">
+              <img src="اللوقوهات والخط والالوان/01 Logo-20251021T004519Z-1-001/01 Logo/PNG/logo -03.png"
+                alt="مركز الابتكار" style="height: 40px;">
+            </div>
           </div>
         </div>
 
@@ -992,6 +1033,11 @@
         nav.style.opacity = '';
         prog.style.opacity = '';
       }
+
+      // Shader visibility
+      const shader = document.getElementById('shader-canvas');
+      if (idx === 0) shader.classList.add('hidden');
+      else shader.classList.remove('hidden');
 
       // Alternating panel side: slots 0,2,4 on right → right panel; 1,3,5 on left → left panel
       const onRight = (idx % 2 === 0);
