@@ -101,27 +101,26 @@
 
     #intro-logo-color {
       z-index: 2;
-      filter: drop-shadow(0 0 20px rgba(122, 42, 148, 0.4)) !important;
-      animation: logoPulse 3s ease-in-out infinite alternate;
+      filter: none !important;
     }
 
     @keyframes logoAnim {
       0% {
         transform: translate(-50%, -50%) scale(0.4);
         opacity: 0;
-        filter: blur(10px) drop-shadow(0 0 0px rgba(122, 42, 148, 0));
+        filter: blur(10px);
       }
 
       30% {
         transform: translate(-50%, -50%) scale(1.2);
         opacity: 1;
-        filter: blur(0px) drop-shadow(0 0 30px rgba(122, 42, 148, 0.6));
+        filter: blur(0px);
       }
 
       80% {
         transform: translate(-50%, -50%) scale(1);
         opacity: 1;
-        filter: blur(0px) drop-shadow(0 0 20px rgba(122, 42, 148, 0.4));
+        filter: blur(0px);
       }
 
       100% {
@@ -129,11 +128,6 @@
         opacity: 0;
         filter: blur(5px);
       }
-    }
-
-    @keyframes logoPulse {
-      from { filter: drop-shadow(0 0 20px rgba(122, 42, 148, 0.4)); }
-      to { filter: drop-shadow(0 0 40px rgba(0, 181, 226, 0.6)); }
     }
 
     @keyframes fadeOutWhite {
