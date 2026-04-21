@@ -646,6 +646,75 @@
         transform: translateX(-50%) translateY(8px);
       }
     }
+    /* ─── MOBILE RESPONSIVENESS ─────────────────────────── */
+    @media (max-width: 768px) {
+      .scene-video {
+        object-fit: cover; /* Fill screen vertically */
+      }
+
+      .text-slot {
+        width: 94vw;
+        bottom: 15vh;
+        gap: 0.8rem;
+      }
+
+      .title {
+        font-size: 1.8rem;
+        white-space: normal !important; /* Allow wrapping on mobile */
+        line-height: 1.3;
+        padding-bottom: 0.5rem;
+      }
+
+      .glass-box {
+        padding: 1.2rem 1.5rem;
+        border-radius: 28px;
+        background: rgba(4, 4, 18, 0.75); /* Slightly more opaque for readability */
+      }
+
+      .tags li {
+        padding: 0.25rem 0.6rem;
+        font-size: 0.7rem;
+      }
+
+      .desc {
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      #nav {
+        top: 1rem;
+        left: 1rem;
+      }
+      
+      #nav img {
+        height: 35px;
+      }
+
+      #progress {
+        left: 0.8rem;
+        gap: 0.6rem;
+      }
+
+      #progress .dot {
+        width: 4px;
+        height: 18px;
+      }
+
+      #progress .dot.active {
+        height: 30px;
+      }
+
+      .qr-container {
+        display: none; /* Hide QR on mobile (you're already on it) */
+      }
+      
+      .outro-cta {
+        width: 90%;
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
     /* ─── (Indicators widget removed) ──────────────────── */
   </style>
 </head>
