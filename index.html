@@ -758,28 +758,28 @@
       <!-- Videos (all mounted) -->
       <div class="videos">
         <!-- 01 -->
-        <video class="scene-video" data-idx="0" muted playsinline preload="auto" disablepictureinpicture>
+        <video class="scene-video" data-idx="0" autoplay muted playsinline preload="auto" disablepictureinpicture>
           <source src="واجهة مركز الابتكار والبداية  01/المقاطع/البداية.mp4" type="video/mp4">
         </video>
         <!-- 02 -->
-        <video class="scene-video" data-idx="1" muted playsinline preload="auto" disablepictureinpicture>
+        <video class="scene-video" data-idx="1" autoplay muted playsinline preload="auto" disablepictureinpicture>
           <source src="مختبر الشمولية الرقمية 02/المقاطع/مختبر الشمولية الرقمية.mp4" type="video/mp4">
         </video>
         <!-- 03 -->
-        <video class="scene-video" data-idx="2" muted playsinline preload="auto" disablepictureinpicture>
+        <video class="scene-video" data-idx="2" autoplay muted playsinline preload="auto" disablepictureinpicture>
           <source src="منطقة عرض قصص النجاح 03/المقاطع/منطقة وشاشة قصص النجاح.mp4" type="video/mp4">
         </video>
         <!-- 04 -->
-        <video class="scene-video" data-idx="3" muted playsinline preload="auto" disablepictureinpicture>
+        <video class="scene-video" data-idx="3" autoplay muted playsinline preload="auto" disablepictureinpicture>
           <source src="مختبر الذكاء الاصطناعي التقنيات الناشئة 04/المقاطع/مختبر الذكاء الاصطناعي والتقنيات الناشئة.mp4"
             type="video/mp4">
         </video>
         <!-- 05 -->
-        <video class="scene-video" data-idx="4" muted playsinline preload="auto" disablepictureinpicture>
+        <video class="scene-video" data-idx="4" autoplay muted playsinline preload="auto" disablepictureinpicture>
           <source src="05 مختبر تصميم التجارب التعليمية/المقاطع/مختبر تصميم التجارب التعليمية.mp4" type="video/mp4">
         </video>
         <!-- 06 -->
-        <video class="scene-video" data-idx="5" muted playsinline preload="auto" disablepictureinpicture>
+        <video class="scene-video" data-idx="5" autoplay muted playsinline preload="auto" disablepictureinpicture>
           <source src="مختبر تصميم التجارب الغامرة 06/المقاطع/مختبر التجارب الغامرة.mp4" type="video/mp4">
         </video>
       </div>
@@ -960,9 +960,26 @@
     // Pause all videos; control via currentTime
     videos.forEach(v => {
       v.pause();
-      // Use requestVideoFrameCallback if available for smoother visual updates, otherwise fallback
-      v.addEventListener('loadeddata', () => { v.currentTime = 0.01; }, { once: true });
+      v.addEventListener('loadedmetadata', () => { v.currentTime = 0.01; }, { once: true });
     });
+
+    // UNLOCK VIDEOS FOR MOBILE: Browsers like Chrome mobile require a play() call 
+    // to "warm up" the video engine. We'll do this on first interaction.
+    let videosUnlocked = false;
+    function unlockVideos() {
+      if (videosUnlocked) return;
+      videosUnlocked = true;
+      videos.forEach(v => {
+        const p = v.play();
+        if (p !== undefined) {
+          p.then(() => { v.pause(); }).catch(() => {});
+        }
+      });
+      window.removeEventListener('touchstart', unlockVideos);
+      window.removeEventListener('mousedown', unlockVideos);
+    }
+    window.addEventListener('touchstart', unlockVideos);
+    window.addEventListener('mousedown', unlockVideos);
 
     let currentScene = -1;
     function setActiveScene(idx) {
