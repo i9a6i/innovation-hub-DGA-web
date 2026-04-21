@@ -378,24 +378,56 @@
     }
 
     .tags li {
-      background: rgba(122, 42, 148, 0.25); /* Transparent DGA Purple */
+      background: rgba(122, 42, 148, 0.22);
       backdrop-filter: blur(10px) saturate(120%);
       -webkit-backdrop-filter: blur(10px) saturate(120%);
-      border: 1px solid rgba(122, 42, 148, 0.4);
+      border: 1px solid rgba(122, 42, 148, 0.35);
       border-radius: 100px;
       padding: 0.35rem 0.9rem;
       font-size: 0.8rem;
       font-weight: 600;
-      color: #fff;
+      color: rgba(255,255,255,0.85);
       white-space: nowrap;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition:
+        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease,
+        color 0.25s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    /* Spotlight pseudo-element — position driven via JS custom properties */
+    .tags li::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        circle 55px at var(--mx, 50%) var(--my, 50%),
+        rgba(0, 181, 226, 0.18) 0%,
+        transparent 75%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
     }
 
     .tags li:hover {
-      background: rgba(122, 42, 148, 0.25);
-      border-color: var(--dga-purple-mid);
+      transform: translateY(-2px) scale(1.04);
+      background: rgba(122, 42, 148, 0.32);
+      border-color: rgba(0, 181, 226, 0.45);
       color: #fff;
+      box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.22),
+        0 0 8px rgba(0, 181, 226, 0.1);
+    }
+
+    .tags li:hover::before {
+      opacity: 1;
     }
 
     .desc {
@@ -1145,6 +1177,20 @@
       hint.classList.add('show');
       setActiveScene(0);
     }, 5500);
+
+    // ══ TAGS MOUSE SPOTLIGHT ══════════════════════════════
+    // Track mouse position relative to each tag and update
+    // the CSS custom properties --mx / --my so the
+    // radial-gradient spotlight follows the cursor.
+    document.querySelectorAll('.tags li').forEach(tag => {
+      tag.addEventListener('mousemove', (e) => {
+        const rect = tag.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%';
+        const y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
+        tag.style.setProperty('--mx', x);
+        tag.style.setProperty('--my', y);
+      });
+    });
   </script>
 
 </body>
